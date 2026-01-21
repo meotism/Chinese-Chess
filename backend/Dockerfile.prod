@@ -1,0 +1,69 @@
+# Production Dockerfile for Chinese Chess Backend
+# Multi-stage build for optimized image size
+
+# Stage 1: Build
+FROM golang:1.21-alpine AS builder
+
+# Install build dependencies
+RUN apk add --no-cache git ca-certificates tzdata
+
+# Set working directory
+WORKDIR /app
+
+# Copy go mod files
+COPY go.mod go.sum ./
+
+# Download dependencies
+RUN go mod download
+
+# Copy source code
+COPY . .
+
+# Build arguments
+ARG GIT_COMMIT=unknown
+ARG BUILD_TIME=unknown
+ARG VERSION=unknown
+
+# Build the application with optimizations
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
+    -ldflags="-w -s -X main.GitCommit=${GIT_COMMIT} -X main.BuildTime=${BUILD_TIME} -X main.Version=${VERSION}" \
+    -o /xiangqi-server \
+    ./cmd/server
+
+# Stage 2: Production image
+FROM alpine:3.19
+
+# Install runtime dependencies
+RUN apk --no-cache add ca-certificates tzdata
+
+# Create non-root user
+RUN addgroup -g 1000 xiangqi && \
+    adduser -u 1000 -G xiangqi -s /bin/sh -D xiangqi
+
+# Set working directory
+WORKDIR /app
+
+# Copy binary from builder
+COPY --from=builder /xiangqi-server .
+
+# Copy migrations
+COPY --from=builder /app/db/migrations ./db/migrations
+
+# Copy config
+COPY --from=builder /app/configs ./configs
+
+# Change ownership
+RUN chown -R xiangqi:xiangqi /app
+
+# Switch to non-root user
+USER xiangqi
+
+# Expose port
+EXPOSE 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD wget -q -O /dev/null http://localhost:8080/health || exit 1
+
+# Run the application
+ENTRYPOINT ["./xiangqi-server"]

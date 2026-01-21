@@ -1,0 +1,172 @@
+# =====================
+# Secrets & Credentials
+# =====================
+.env
+.env.*
+.env.local
+.env.production
+.env.staging
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+credentials.json
+secrets.yaml
+secrets.yml
+config.production.yaml
+config.staging.yaml
+
+# =====================
+# Go Backend
+# =====================
+backend/bin/
+backend/tmp/
+backend/*.exe
+backend/*.exe~
+backend/*.dll
+backend/*.so
+backend/*.dylib
+vendor/
+
+# =====================
+# iOS / Xcode
+# =====================
+ios/build/
+ios/DerivedData/
+ios/*.xcworkspace
+ios/**/*.xcuserstate
+ios/**/xcuserdata/
+ios/**/*.xccheckout
+ios/**/*.moved-aside
+ios/**/*.pbxuser
+ios/**/*.mode1v3
+ios/**/*.mode2v3
+ios/**/*.perspectivev3
+*.ipa
+*.dSYM.zip
+*.dSYM
+*.hmap
+*.ipa
+*.xcuserstate
+xcuserdata/
+DerivedData/
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+*.xcscmblueprint
+*.xcworkspace
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+.build/
+Packages/
+Package.resolved
+*.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
+
+# CocoaPods
+ios/Pods/
+ios/Podfile.lock
+
+# Carthage
+ios/Carthage/Build/
+ios/Carthage/Checkouts/
+
+# =====================
+# Database
+# =====================
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-shm
+*.db-wal
+
+# =====================
+# Logs
+# =====================
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =====================
+# IDE & Editors
+# =====================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# =====================
+# OS Generated
+# =====================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# =====================
+# Docker
+# =====================
+docker-compose.override.yml
+docker-compose.production.yml
+.docker/
+
+# =====================
+# Testing
+# =====================
+coverage/
+*.cover
+*.coverage
+.coverage
+htmlcov/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.coverprofile
+
+# =====================
+# Temporary Files
+# =====================
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# =====================
+# Build Artifacts
+# =====================
+dist/
+build/
+out/
+*.app
+*.framework
+*.xcarchive
+
+# =====================
+# Miscellaneous
+# =====================
+*.pid
+*.seed
+*.pid.lock
+.node_repl_history
+.npm
+.eslintcache
+.yarn-integrity

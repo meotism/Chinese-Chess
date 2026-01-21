@@ -1,0 +1,44 @@
+# Chinese Chess Backend Configuration
+# This file contains default configuration values for DEVELOPMENT ONLY.
+# Override with environment variables prefixed with XIANGQI_
+#
+# SECURITY WARNING:
+# - Never commit production credentials to version control
+# - Use environment variables for production deployments
+# - Set sslmode to "require" or "verify-full" in production
+# - Use strong passwords for database and Redis
+
+environment: development
+
+server:
+  port: 8080
+  host: "0.0.0.0"
+  read_timeout: 15
+  write_timeout: 15
+
+database:
+  host: localhost
+  port: 5432
+  user: postgres
+  # WARNING: Change this password in production!
+  # Use environment variable XIANGQI_DATABASE_PASSWORD instead
+  password: postgres
+  dbname: xiangqi
+  # WARNING: Set to "require" or "verify-full" in production!
+  sslmode: disable
+  max_open_conns: 25
+  max_idle_conns: 5
+
+redis:
+  host: localhost
+  port: 6379
+  # Set password via XIANGQI_REDIS_PASSWORD in production
+  password: ""
+  db: 0
+
+# Production configuration example (use environment variables):
+# XIANGQI_ENVIRONMENT=production
+# XIANGQI_DATABASE_HOST=your-db-host
+# XIANGQI_DATABASE_PASSWORD=your-secure-password
+# XIANGQI_DATABASE_SSLMODE=require
+# XIANGQI_REDIS_PASSWORD=your-redis-password

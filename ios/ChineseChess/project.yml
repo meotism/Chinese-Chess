@@ -1,0 +1,83 @@
+# XcodeGen project specification
+# Run: xcodegen generate to create the .xcodeproj
+
+name: ChineseChess
+options:
+  bundleIdPrefix: com.xiangqi
+  deploymentTarget:
+    iOS: "15.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "5.9"
+
+packages:
+  GRDB:
+    url: https://github.com/groue/GRDB.swift
+    from: "6.24.0"
+
+targets:
+  ChineseChess:
+    type: application
+    platform: iOS
+    sources:
+      - ChineseChess
+    settings:
+      base:
+        INFOPLIST_FILE: ChineseChess/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.xiangqi.chinesechess
+        TARGETED_DEVICE_FAMILY: "1"
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: false
+    dependencies:
+      - package: GRDB
+    info:
+      path: ChineseChess/Info.plist
+      properties:
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+
+  ChineseChessTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - ChineseChessTests
+    dependencies:
+      - target: ChineseChess
+
+  ChineseChessUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - ChineseChessUITests
+    dependencies:
+      - target: ChineseChess
+
+schemes:
+  ChineseChess:
+    build:
+      targets:
+        ChineseChess: all
+        ChineseChessTests: [test]
+        ChineseChessUITests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - ChineseChessTests
+        - ChineseChessUITests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
