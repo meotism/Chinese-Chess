@@ -170,3 +170,5 @@ out/
 .npm
 .eslintcache
 .yarn-integrity
+
+.claude/
