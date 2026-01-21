@@ -7,18 +7,14 @@ RUN apk add --no-cache git ca-certificates
 # Set working directory
 WORKDIR /app
 
-# Copy go mod file
-COPY go.mod ./
-COPY go.sum* ./
-
-# Download dependencies and generate go.sum if missing
-RUN go mod download || go mod tidy
-
-# Copy source code
+# Copy all source files
 COPY . .
 
-# Build the application
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /app/bin/server ./cmd/server
+# Generate go.sum and download dependencies
+RUN go mod tidy && go mod download
+
+# Build the application with verbose output
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -ldflags="-w -s" -o /app/bin/server ./cmd/server
 
 # Final stage
 FROM alpine:3.19
